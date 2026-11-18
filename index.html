@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b3d63">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Campo EERSA Galería</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="top">
+  <div class="brand"><b>Campo EERSA · Galería</b><small>Puestas a tierra · Correcciones</small></div>
+  <div id="gpsChip" class="chip" hidden>GPS…</div>
+</header>
+
+<main>
+  <!-- INICIO -->
+  <section id="viewHome">
+    <nav class="tabs">
+      <button data-tab="ordenes" class="on">Órdenes</button>
+      <button data-tab="reporte">Reporte</button>
+    </nav>
+
+    <div id="tabOrdenes">
+      <div id="csvBox" class="card"></div>
+      <div id="listBox" hidden>
+        <input id="q" type="search" placeholder="Buscar orden, medidor o cuenta" autocomplete="off">
+        <div class="filters">
+          <button data-f="todas" class="on">Todas</button>
+          <button data-f="pend">Pendientes</button>
+          <button data-f="curso">En curso</button>
+          <button data-f="ok">Completas</button>
+        </div>
+        <div id="list"></div>
+      </div>
+    </div>
+
+    <div id="tabReporte" hidden>
+      <div class="card">
+        <label class="lbl">Fecha de trabajo</label>
+        <input id="repFecha" type="date">
+        <div id="repResumen" class="muted"></div>
+        <button id="btnZip" class="btn primary">Descargar reporte del día (ZIP)</button>
+        <button id="btnDocx" class="btn">Solo Word del día</button>
+        <p class="muted small">El ZIP trae el Word editable, una carpeta por medidor con sus fotos y un CSV de datos.</p>
+      </div>
+      <div class="card">
+        <div id="riesgo"></div>
+        <button id="btnBackup" class="btn">Respaldar todo (todas las fechas)</button>
+        <div id="storInfo" class="muted small"></div>
+        <button id="btnInstall" class="btn" hidden>Instalar app en el teléfono</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDEN -->
+  <section id="viewOrden" hidden>
+    <div class="card ordHead">
+      <div class="big">Orden: <b id="oNum"></b></div>
+      <div class="big">Medidor: <b id="oMed"></b></div>
+      <div class="muted" id="oExtra"></div>
+    </div>
+
+    <div class="card">
+      <label class="lbl" for="ejecutor">Ejecutado por</label>
+      <select id="ejecutor">
+        <option>Nadie</option><option>Alcocer</option><option>Garcés</option>
+      </select>
+    </div>
+
+    <h3>Fotografías <span id="fotoCount" class="muted"></span></h3>
+    <div id="grid" class="grid"></div>
+
+    <h3>Materiales</h3>
+    <div class="card tblWrap">
+      <table id="mats">
+        <thead><tr><th>Material</th><th>CSV</th><th>Real / novedad</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <button id="allOk" class="btn small">Marcar todo OK</button>
+      <p class="muted small">Cable de cobre y varilla (resaltados): escribe un número o toca OK. El resto de materiales: solo se marca OK.</p>
+    </div>
+
+    <div id="faltan" class="alertBox" hidden></div>
+    <button id="btnSave" class="btn primary big">Guardar orden</button>
+    <button id="btnDiscard" class="btn danger small">Descartar esta orden</button>
+  </section>
+</main>
+
+<div id="camOv" hidden>
+  <video id="camVideo" playsinline muted autoplay></video>
+  <div id="camLabel"></div><div id="camGps"></div>
+  <div class="camBar"><button id="camCancel" class="cb">Cancelar</button><button id="camGal" class="cb">🖼 Galería</button><button id="camShot" aria-label="Tomar foto"></button><button id="camNative" class="cb">Cámara del<br>teléfono</button></div>
+</div>
+<div id="modal" hidden><div class="mbox"><h4 id="mTitle"></h4><div id="mBody"></div><div id="mBtns"></div></div></div>
+<div id="busy" hidden><div>Procesando…</div></div>
+<input id="cam" type="file" accept="image/*" capture="environment" hidden>
+<input id="gal" type="file" accept="image/*" hidden>
+<input id="csvIn" type="file" accept=".csv,text/csv" hidden>
+
+<script src="lib/jszip.min.js"></script>
+<script src="lib/docx.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
